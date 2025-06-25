@@ -1,36 +1,23 @@
 class Solution {
+
+    static void generateSubset(int[]nums,List<Integer> current,int index,List<List<Integer>>result){
+    
+      if(index==nums.length){
+      result.add(new ArrayList<>(current));
+      return;
+      }
+      current.add(nums[index]);
+      generateSubset(nums, current, index + 1, result);
+      current.remove(current.size() - 1);
+      generateSubset(nums, current, index + 1, result);
+
+    }
+
+
     public List<List<Integer>> subsets(int[] nums) {
-        
-       List<List<Integer>> ans=new ArrayList<>();
-       // backtrack(nums,ans,0,new ArrayList<>());
-        subset(0, nums, new ArrayList<>(), ans);
-         return ans;
+        List<List<Integer>>result=new ArrayList<>();
+        generateSubset(nums,new ArrayList<>(),0,result);
+        return result;
     }
 
-     public static void subset(int idx, int[] nums, ArrayList<Integer> ds, List<List<Integer>> ans){
-        if(idx >= nums.length){
-            ans.add(new ArrayList<>(ds));
-            return;
-        }
-
-        // will take
-        ds.add(nums[idx]);
-        subset(idx + 1, nums, ds, ans);
-        ds.remove(ds.size() - 1);
-
-        // will not take
-        subset(idx + 1, nums, ds, ans);
-    }
-
-
-    public static  void  backtrack(int[] nums,List<List<Integer>> ans,int index,List<Integer>emptylist){
-        if(index>=nums.length){
-             ans.add(new ArrayList<>(emptylist));
-            return  ;
-        }
-        emptylist.add(nums[index]);
-        backtrack(nums,ans,index+1,emptylist);
-        emptylist.remove(emptylist.size()-1);
-        backtrack(nums,ans,index+1,emptylist);
-    }
 }
